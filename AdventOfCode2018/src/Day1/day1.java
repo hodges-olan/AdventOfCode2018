@@ -66,10 +66,10 @@ import java.util.HashSet;
  *
  * @author 71100096
  */
-public class dayOne {
+public class day1 {
     
     public static void main(String[] args) {
-        String filePath = "dayOne.txt";
+        String filePath = "day1.txt";
         ArrayList<Integer> input = FileIO.readFileToArrayListInteger(filePath);
         Integer total = 0;
         HashSet<Integer> uniqueEntries = new HashSet<>();

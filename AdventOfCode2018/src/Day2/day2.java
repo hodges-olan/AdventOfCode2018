@@ -15,10 +15,10 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author 71100096
  */
-public class dayTwo {
+public class day2 {
     
     public static void main(String[] args) {
-        String filePath = "dayTwo.txt";
+        String filePath = "day2.txt";
         ArrayList<String> input = FileIO.readFileToArrayListString(filePath);
         Integer dualOccurence = 0;
         Integer tripleOccurence = 0;

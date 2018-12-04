@@ -75,7 +75,6 @@ public class dayOne {
         HashSet<Integer> uniqueEntries = new HashSet<>();
         boolean partOneAnswerFound = false;
         boolean partTwoAnswerFound = false;
-
         
         while(!partTwoAnswerFound) {
             for(Integer entry: input) {

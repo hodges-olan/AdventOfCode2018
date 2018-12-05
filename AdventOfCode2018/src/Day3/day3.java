@@ -74,53 +74,76 @@ public class day3 {
     public static void main(String[] args) {
         String filePath = "day3.txt";
         ArrayList<String> input = FileIO.readFileToArrayListString(filePath);
-        Map<String, Integer> material = new HashMap();
-        Integer overlapId = -1;
+        Map<String, Integer> material = loadMap(input);
         
-        for(String entry: input) {
-            String[] entrySplit = entry.split("\\s+");
-            Integer id = Integer.parseInt(entrySplit[0].replace("#", ""));
+        System.out.println("Part One: " + partOne(material));
+        System.out.println("Part Two: " + partTwo(material, input));
+    }
+    
+    public static Map loadMap(ArrayList<String> input) {
+        Map<String, Integer> material = new HashMap();
+        input.stream().map((entry) -> entry.split("\\s+")).forEachOrdered((entrySplit) -> {
             String start = entrySplit[2].replace(":", "");
             String size = entrySplit[3];
             Integer x = Integer.parseInt((start.split(","))[0]);
             Integer y = Integer.parseInt((start.split(","))[1]);
             Integer rangeX = Integer.parseInt((size.split("x"))[0]);
             Integer rangeY = Integer.parseInt((size.split("x"))[1]);
-            boolean overlap = false;
 
             for(int i = x; i < (x + rangeX); i++) {
                 for(int j = y; j < (y + rangeY); j++) {
                     String coord = Integer.toString(i) + "," + Integer.toString(j);
                     if(!material.containsKey(coord)) {
-                        material.put(coord, id);
+                        material.put(coord, 1);
                     } else {
-                        if(Objects.equals(overlapId, material.get(coord))) {
-                            overlapId = -1;
-                        }
-                        overlap = true;
-                        material.put(coord, -1);
+                        material.put(coord, material.get(coord)+1);
                     }
                 }
-                if(!overlap) {
-                    overlapId = id;
-                }
             }
-        }
-        
-        System.out.println("Part One: " + findOverlap(material));
-        System.out.println("Part Two: " + (overlapId));
+        });
+        return material;
     }
     
-    public static Integer findOverlap(Map material) {
+    public static Integer partOne(Map<String, Integer> material) {
         Iterator it = material.entrySet().iterator();
         Integer overlap = 0;
         while (it.hasNext()) {
             Map.Entry coord = (Map.Entry)it.next();
-            if((Integer) coord.getValue() == -1) {
+            if((Integer) coord.getValue() > 1) {
                 overlap++;
             }
         }
         return overlap;
+    }
+    
+    public static Integer partTwo(Map<String, Integer> material, ArrayList<String> input) {
+        Integer noOverlap = 0;
+        
+        for(String entry: input) {
+            boolean overlap = false;
+            String[] entrySplit = entry.split("\\s+");
+            String start = entrySplit[2].replace(":", "");
+            String size = entrySplit[3];
+            Integer x = Integer.parseInt((start.split(","))[0]);
+            Integer y = Integer.parseInt((start.split(","))[1]);
+            Integer rangeX = Integer.parseInt((size.split("x"))[0]);
+            Integer rangeY = Integer.parseInt((size.split("x"))[1]);
+
+            for(int i = x; i < (x + rangeX); i++) {
+                for(int j = y; j < (y + rangeY); j++) {
+                    String coord = Integer.toString(i) + "," + Integer.toString(j);
+                    if(material.get(coord) > 1) {
+                        overlap = true;
+                    }
+                }
+            }
+            
+            if(!overlap) {
+                noOverlap = Integer.parseInt(entrySplit[0].replace("#", ""));
+            }
+        }
+        
+        return noOverlap;
     }
 
 }

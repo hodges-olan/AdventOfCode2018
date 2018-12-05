@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -21,8 +22,9 @@ public class day3 {
         String filePath = "day3.txt";
         ArrayList<String> input = FileIO.readFileToArrayListString(filePath);
         Map<String, Integer> material = new HashMap();
+        Integer overlapId = -1;
         
-        input.forEach((entry) -> {
+        for(String entry: input) {
             String[] entrySplit = entry.split("\\s+");
             Integer id = Integer.parseInt(entrySplit[0].replace("#", ""));
             String start = entrySplit[2].replace(":", "");
@@ -32,7 +34,6 @@ public class day3 {
             Integer rangeX = Integer.parseInt((size.split("x"))[0]);
             Integer rangeY = Integer.parseInt((size.split("x"))[1]);
             boolean overlap = false;
-            Integer overlapId = 0;
 
             for(int i = x; i < (x + rangeX); i++) {
                 for(int j = y; j < (y + rangeY); j++) {
@@ -40,8 +41,9 @@ public class day3 {
                     if(!material.containsKey(coord)) {
                         material.put(coord, id);
                     } else {
-                        Integer previousOverlapId = material.get(coord);
-                        
+                        if(Objects.equals(overlapId, material.get(coord))) {
+                            overlapId = -1;
+                        }
                         overlap = true;
                         material.put(coord, -1);
                     }
@@ -50,10 +52,10 @@ public class day3 {
                     overlapId = id;
                 }
             }
-        });
+        }
         
         System.out.println("Part One: " + findOverlap(material));
-        System.out.println("Part Two: ");
+        System.out.println("Part Two: " + (overlapId));
     }
     
     public static String findOverlap(Map material) {

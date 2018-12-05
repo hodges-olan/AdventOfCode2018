@@ -7,6 +7,7 @@ package Day4;
 
 import FileIO.FileIO;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -17,6 +18,15 @@ public class day4 {
     public static void main(String[] args) {
         String filePath = "day4.txt";
         ArrayList<String> input = FileIO.readFileToArrayListString(filePath);
+        Collections.sort(input);
+    }
+    
+    public static void loadSchedule() {
+        
+    }
+    
+    public static void printSchedule() {
+        
     }
     
 }

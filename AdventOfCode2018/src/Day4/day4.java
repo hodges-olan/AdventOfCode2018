@@ -5,10 +5,18 @@
  */
 package Day4;
 
+import FileIO.FileIO;
+import java.util.ArrayList;
+
 /**
  *
  * @author 71100096
  */
 public class day4 {
+    
+    public static void main(String[] args) {
+        String filePath = "day4.txt";
+        ArrayList<String> input = FileIO.readFileToArrayListString(filePath);
+    }
     
 }
